@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import {useAppSelector} from '../redux/hooks';
+import moment from 'moment';
 
 const OrderHistoryScreen = () => {
   const {orders, isLoading, error} = useAppSelector(state => state.order);
@@ -15,13 +16,12 @@ const OrderHistoryScreen = () => {
   const renderOrder = ({item}: {item: any}) => (
     <View style={styles.orderCard}>
       <Text style={styles.orderTitle}>Order ID: {item.id}</Text>
-      <Text>Date: {item.date || 'N/A'}</Text>
-      <Text>Total: £{item.total}</Text>
-      <Text>Products:</Text>
+      <Text>Date: {moment(item.date).format('ll') || 'N/A'}</Text>{' '}
+      <Text>Total: £{item.total.toFixed(2)}</Text> <Text>Products:</Text>
       {item.products?.map((product: any) => (
         <Text key={`${item.id}-${product.id}`} style={styles.productItem}>
           - {product.title} x {product.quantity} = £
-          {product.price * product.quantity}
+          {(product.price * product.quantity).toFixed(2)}{' '}
         </Text>
       ))}
     </View>
