@@ -9,14 +9,17 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native';
-import {useAppDispatch, useAppSelector} from '../redux/hooks';
-import {fetchProducts, setSelectedProduct} from '../redux/slice/productSlice';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {RootStackParamList} from '../navigation/RootLayout';
-import EvilIcons from 'react-native-vector-icons/EvilIcons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const ProductListScreen = () => {
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import EvilIcons from 'react-native-vector-icons/EvilIcons'; // Wishlist icon
+import {RootStackParamList} from '../../navigation/RootLayout';
+import {useAppDispatch, useAppSelector} from '../../redux/hooks';
+import {
+  fetchProducts,
+  setSelectedProduct,
+} from '../../redux/slice/productSlice';
+
+const ProductList = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const dispatch = useAppDispatch();
   const {products, isLoading, error, page, hasMore} = useAppSelector(
@@ -59,25 +62,28 @@ const ProductListScreen = () => {
     </TouchableOpacity>
   );
 
+  const limitedProducts = products.slice(0, 15);
+
   return (
     <View style={styles.container}>
       <View
         style={{
-          marginBottom: 30,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
         }}>
-        <TouchableOpacity onPress={() => navigation.navigate('HomePage')}>
-          <MaterialCommunityIcons name="home" size={24} color="black" />
+        <Text style={styles.heading}>Explore Products</Text>
+        <TouchableOpacity
+          onPress={() => navigation.navigate('ProductListScreen')}>
+          <Text>View All</Text>
         </TouchableOpacity>
       </View>
-      <Text>
-        <Text style={styles.heading}>Products</Text>
-      </Text>
       {error ? <Text style={styles.error}>{error}</Text> : null}
-      {products.length === 0 && isLoading ? (
+      {limitedProducts.length === 0 && isLoading ? (
         <ActivityIndicator size="large" color="#0000ff" />
       ) : (
         <FlatList
-          data={products}
+          data={limitedProducts}
           renderItem={renderItem}
           keyExtractor={(item, index) => `${item.id}-${index}`}
           onEndReached={loadMore}
@@ -156,4 +162,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProductListScreen;
+export default ProductList;

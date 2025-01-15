@@ -24,10 +24,8 @@ const LoginScreen: React.FC = () => {
   const [password, setPassword] = useState('');
   const [weakPassword, setWeakPassword] = useState(false);
 
-  console.log('authData', authData?.token);
-
   useEffect(() => {
-    if (authData?.token) {
+    if (authData?.accessToken) {
       navigation.navigate('HomePage' as never);
     }
   }, [authData, navigation]);
@@ -67,7 +65,7 @@ const LoginScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login Screen</Text>
+      <Text style={styles.title}>Cart App</Text>
       {error && <Text style={styles.error}>{error}</Text>}
 
       <TextInput
@@ -99,9 +97,10 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 24,
+    fontSize: 32,
     marginBottom: 12,
     textAlign: 'center',
+    fontFamily: 'Roboto-Bold',
   },
   input: {
     borderWidth: 1,

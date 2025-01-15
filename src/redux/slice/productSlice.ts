@@ -2,6 +2,7 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 
 interface Product {
+  [x: string]: any;
   weight: number;
   form: string;
   id: number;

@@ -5,7 +5,7 @@ interface AuthData {
   id?: number;
   username?: string;
   email?: string;
-  token?: string;
+  accessToken?: string;
 }
 
 interface AuthState {

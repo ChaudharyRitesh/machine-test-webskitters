@@ -8,6 +8,7 @@ import BottomTabNavigation from './MainNavigator';
 import CartScreen from '../screens/CartScreen';
 import OrderHistoryScreen from '../screens/OrderHistoryScreen';
 import ProductDetailScreen from '../screens/ProductDetailScreen';
+import ProductListScreen from '../screens/ProductListingScreen';
 const Stack = createNativeStackNavigator();
 
 export type RootStackParamList = {
@@ -17,6 +18,7 @@ export type RootStackParamList = {
   Order: undefined;
   Cart: undefined;
   ProductDetail: undefined;
+  ProductListScreen: undefined;
 };
 
 const RootLayout = () => {
@@ -34,6 +36,7 @@ const RootLayout = () => {
         <Stack.Screen name="Cart" component={CartScreen} />
         <Stack.Screen name="Order" component={OrderHistoryScreen} />
         <Stack.Screen name="ProductDetail" component={ProductDetailScreen} />
+        <Stack.Screen name="ProductListScreen" component={ProductListScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );

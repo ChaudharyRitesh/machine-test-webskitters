@@ -8,11 +8,9 @@ const SplashScreen = () => {
 
   const {authData} = useAppSelector(state => state.auth);
 
-  console.log('token in splash:', authData?.token);
-
   useEffect(() => {
     const timer = setTimeout(() => {
-      if (authData?.token) {
+      if (authData?.accessToken) {
         navigation.navigate('HomePage' as never);
       } else {
         navigation.navigate('Login' as never);
@@ -20,7 +18,7 @@ const SplashScreen = () => {
     }, 1000);
 
     return () => clearTimeout(timer);
-  }, [authData?.token, navigation]);
+  }, [authData, navigation]);
 
   return (
     <View style={styles.container}>

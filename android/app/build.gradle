@@ -53,7 +53,7 @@ react {
     // hermesFlags = ["-O", "-output-source-map"]
 
     project.ext.vectoricons = [
-    iconFontNames: [ 'MaterialIcons.ttf', 'EvilIcons.ttf', 'Foundation.ttf', 'Ionicons.ttf', 'MaterialCommunityIcons.ttf', 'SimpleLineIcons.ttf', 'Octicons.ttf', 'Zocial.ttf', 'Fontisto.ttf', 'FontAwesome.ttf' ]
+    iconFontNames: [ 'MaterialIcons.ttf', 'EvilIcons.ttf', 'Foundation.ttf', 'Ionicons.ttf', 'MaterialCommunityIcons.ttf', 'SimpleLineIcons.ttf', 'Octicons.ttf', 'Zocial.ttf', 'Fontisto.ttf', 'FontAwesome.ttf', 'AntDesign' ]
     ]
 
     /* Autolinking */

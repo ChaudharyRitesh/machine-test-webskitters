@@ -1,5 +1,4 @@
-/* eslint-disable react-native/no-inline-styles */
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -28,13 +27,48 @@ const ProductDetailScreen = () => {
     state => state.product,
   );
 
-  console.log('>>>>>>>', selectedProduct);
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(() => {
     if (selectedProduct && !selectedProduct.description) {
       dispatch(fetchProductById(selectedProduct.id));
     }
   }, [selectedProduct, dispatch]);
+
+  const updateCart = () => {
+    if (!selectedProduct) {
+      return;
+    }
+
+    const item = {
+      id: selectedProduct.id.toString(),
+      title: selectedProduct.title,
+      price: selectedProduct.price,
+      quantity: quantity,
+      image: selectedProduct.images[0],
+      form: selectedProduct.form,
+    };
+    dispatch(addToCart(item));
+
+    Toast.show({
+      type: 'success',
+      text1: 'Item Quantity Updated',
+      text2: `${selectedProduct.title} quantity has been updated in your cart.`,
+      visibilityTime: 1000,
+    });
+  };
+
+  const incrementQuantity = () => {
+    setQuantity(prev => prev + 1);
+    updateCart();
+  };
+
+  const decrementQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(prev => prev - 1);
+      updateCart();
+    }
+  };
 
   if (!selectedProduct) {
     return (
@@ -43,25 +77,6 @@ const ProductDetailScreen = () => {
       </View>
     );
   }
-
-  const handleAddToCart = () => {
-    const item = {
-      id: selectedProduct.id.toString(),
-      title: selectedProduct.title,
-      price: selectedProduct.price,
-      quantity: 1,
-      image: selectedProduct.images[0],
-      form: selectedProduct.form,
-    };
-    dispatch(addToCart(item));
-
-    Toast.show({
-      type: 'success',
-      text1: 'Item Added to Cart',
-      text2: `${selectedProduct.title} has been added to your cart.`,
-      visibilityTime: 1000,
-    });
-  };
 
   if (isLoading) {
     return (
@@ -109,7 +124,7 @@ const ProductDetailScreen = () => {
           }}>
           <View>
             <Text style={styles.price}>
-              <Text style={styles.sign}>$ </Text>
+              <Text style={styles.sign}>£ </Text>
               {selectedProduct.price}
             </Text>
             <Text style={styles.deliveryText}>Delivery Not Included</Text>
@@ -121,14 +136,17 @@ const ProductDetailScreen = () => {
               alignItems: 'center',
             }}>
             <IconButton
-              onPress={() => {}}
-              icon="heart"
+              onPress={decrementQuantity}
+              icon="-"
               color="red"
               bgColor="white"
             />
+            <View>
+              <Text>{quantity}</Text>
+            </View>
             <IconButton
-              onPress={handleAddToCart}
-              icon="cart-check"
+              onPress={incrementQuantity}
+              icon="+"
               color="white"
               bgColor="#6785F1"
             />
@@ -149,11 +167,6 @@ const styles = StyleSheet.create({
   mainContent: {
     padding: 16,
     backgroundColor: '#EDEFF3',
-    // shadowColor: '#000',
-    // shadowOffset: {width: 0, height: 4},
-    // shadowOpacity: 0.1,
-    // shadowRadius: 8,
-    // elevation: 5,
   },
   sign: {
     fontSize: 14,
@@ -208,7 +221,6 @@ const styles = StyleSheet.create({
   deliveryText: {
     fontSize: 13,
     color: '#7f8c8d',
-    // marginBottom: 12,
     fontWeight: 'medium',
   },
   errorText: {

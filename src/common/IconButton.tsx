@@ -1,11 +1,9 @@
-import {TouchableOpacity} from 'react-native';
+import {Text, TouchableOpacity} from 'react-native';
 import React from 'react';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const IconButton = ({
   icon,
   onPress,
-  color,
   bgColor,
 }: {
   icon: string;
@@ -17,7 +15,7 @@ const IconButton = ({
     <TouchableOpacity
       onPress={onPress}
       style={[styles.container, {backgroundColor: bgColor}]}>
-      <MaterialCommunityIcons name={icon} size={22} color={color} />
+      <Text>{icon}</Text>
     </TouchableOpacity>
   );
 };
@@ -26,7 +24,10 @@ export default IconButton;
 
 const styles = {
   container: {
-    padding: 10,
+    height: 40,
+    width: 40,
+    justifyContent: 'center' as 'center',
+    alignItems: 'center' as 'center',
     borderRadius: 8,
     backgroundColor: '#6785F1',
     borderWidth: 1,
